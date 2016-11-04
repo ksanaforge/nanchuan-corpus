@@ -13,7 +13,8 @@ const cb_div=function(tag,closing){
 }
 const cb_mulu=function(tag,closing){
 	const depth=tag.attributes.level;
-	this.handlers.head_subtree.call(this,tag,closing,depth);
+	const removetext=true; //text inside cb:mulu is added by CBETA, not part of Nanchuan corpus
+	return this.handlers.head_subtree.call(this,tag,closing,depth,removetext);
 }
 const cb_mulu_finalize=function(){
 	this.handlers.head_subtree_finalize.call(this);

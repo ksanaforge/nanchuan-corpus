@@ -3,6 +3,7 @@ const fs=require("fs");
 const sourcepath="../../CBReader/xml/";
 const files=fs.readFileSync("nanchuan.lst","utf8").split(/\r?\n/);
 files.length=329;
+//files.length=3;
 /*
 N49 之後PTS 冊號未確定
 */

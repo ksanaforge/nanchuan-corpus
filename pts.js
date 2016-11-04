@@ -4,7 +4,7 @@ const pgpat2=/(.+?)\.(\d+)/;
 
 //http://www.palitext.com/palitext/tipitaka.htm 56 volumns
 const volstart={
-	Vin:0,
+	Vin:1,
 	D:6,
 	M:9,
 	S:13,
@@ -61,7 +61,7 @@ const encodePTS=function(str){
 		}
 		kpos=makeKPos(volstart[r[1]] ,parseInt(r[2],10)-1,0,0,"pts");
 	} else {
-		const vol=volstart[r[1]]+parseInt(r[2],10);
+		const vol=volstart[r[1]]+parseInt(r[2],10)-1;
 		kpos=makeKPos(vol ,parseInt(r[3],10)-1,0,0,"pts");
 	}
 	return kpos;

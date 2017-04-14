@@ -1,6 +1,6 @@
 const {createCorpus}=require("ksana-corpus-builder");
 const fs=require("fs");
-const sourcepath="../../CBReader/xml/";
+const sourcepath="../../../CBETA2016/CBReader/xml/";
 const files=fs.readFileSync("nanchuan.lst","utf8").split(/\r?\n/);
 files.length=329;
 //files.length=3;
@@ -25,8 +25,8 @@ const {milestone,title,cb_div,cb_mulu,head,cb_mulu_finalize}=require("./div");
 const {note,anchor,ref,noteFileStart}=require("./note");
 const {lb,p,TEI}=require("./format");
 
-const options={inputFormat:"xml",maxTextStackDepth:3//n04n002_019 cb:mulu has head inside
-,name:"nanchuan",bitPat:"nanchuan",textOnly:true}; //set textOnly not to build inverted
+const options={inputFormat:"xml",id:"nanchuan"
+,removePunc:true,title:"南傳大藏經"}; //set textOnly not to build inverted
 const corpus=createCorpus(options);
 
 const finalize=function(){

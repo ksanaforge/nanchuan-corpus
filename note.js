@@ -6,18 +6,18 @@ const ref=function(tag,closing){
 		const type=tag.attributes.type;
 		if (target.substr(0,4)=="#PTS" && type!=="PTS_hide"){
 			const ptskpos=pts.encodePTS(target.substr(5));
-			this.putBookField("pts",ptskpos);
+			this.putArticleField("pts",ptskpos);
 		}
 	}
 }
-const note=function(tag,closing){
+const note=function(tag,closing,kpos,tpos,start,end){
 	if (closing) {
 		/*
 		if (tag.attributes.place!=="foot text") {
 			console.log(tag)
 		}
 		*/
-		const str=this.popText();
+		const str=this.substring(start,end);
 		//n==page number + seq on that page
 		const n=tag.attributes.n;
 		if (!n) {
@@ -33,14 +33,12 @@ const note=function(tag,closing){
 			for (var i=0;i<notekpos.length;i++){
 				const p=notekpos[i];
 				if (i) {
-					this.putBookField("note","*"+notekpos[0],p);//point to same def
-				}else this.putBookField("note",str,p);
+					this.putArticleField("note","*"+notekpos[0],p);//point to same def
+				}else this.putArticleField("note",str,p);
 			}
 		} else {
-			this.putBookField("note",str,notekpos);	
+			this.putArticleField("note",str,notekpos);	
 		}
-	} else {
-		return true;//capture
 	}
 }
 const anchor=function(tag){

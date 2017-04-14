@@ -1,5 +1,5 @@
 var prevpage;
-
+var inP;
 const TEI=function(tag,closing){
 	if (closing) {
 		inlineNotes={};
@@ -13,37 +13,44 @@ const TEI=function(tag,closing){
 		this.putField("sid",sid);
 	}
 }
-
 const lb=function(tag){
-	const s=this.popBaseText();
-	const pbn=tag.attributes.n;
-	const page=parseInt(pbn,10)-1;
-	const line=parseInt(pbn.substr(5))-1;
-
-	if (line>15) {
-		//lines move to <cb:div type="nanchuan-notes">
-		return;
-	}
-	const pb=pbn.substr(0,4);
 	if (!this.started)return; //ignore lb in apparatus after </body>
 
-	this.putLine(s);
+	const pbn=tag.attributes.n;
 
-	if (prevpage!==pb && page===0) {
+	const page=(parseInt(pbn,10)-1);
+	const line=parseInt(pbn.substr(5))-1;
+	const pb=pbn.substr(0,4);
+
+	this.emitLine();
+
+	if (this._pb!==pb && page===0) {
 		this.addBook();
 	}
 
 	if (this.bookCount){
 		const kpos=this.makeKPos(this.bookCount,page,line,0);
 		this.newLine(kpos, this.tPos);
+		if (!this.articlePos){
+			this.articlePos=kpos;
+			this.articleTPos=this.tPos;
+		}
+		if (!inP) { //if not a paragraph , every lb start a new paragraph (for lg and l)
+			this.putEmptyArticleField("p",kpos,this.articleCount);
+		}
 	}
-	prevpage=pb;
+	this._pb=pb;
+	this._pbline=line;
 }
 
-
-
 const p=function(tag,closing){
-	this.putEmptyBookField("p");	
+	if (!this.started) return;
+	if (closing) {
+		inP=false;
+	} else {
+		inP=true;
+		this.putEmptyArticleField("p",this.kPos,this.articleCount);
+	}
 }
 const milestone=function(tag){
 	if (tag.attributes.unit==="juan"){

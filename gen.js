@@ -17,7 +17,7 @@ N49 之後PTS 冊號未確定
 const body=function(tag,closing){
 	if (!closing) this.start();
 }
-git 
+
 const fileStart=function(fn,i){
 	console.log(fn);
 	noteFileStart();

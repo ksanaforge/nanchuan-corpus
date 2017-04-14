@@ -1,4 +1,10 @@
-const {createCorpus}=require("ksana-corpus-builder");
+var createCorpus=null
+try {
+	createCorpus=require("ksana-corpus-builder").createCorpus;
+} catch(e){
+	createCorpus=require("ksana-corpus-lib").createCorpus;
+}
+
 const fs=require("fs");
 const sourcepath="../../../CBETA2016/CBReader/xml/";
 const files=fs.readFileSync("nanchuan.lst","utf8").split(/\r?\n/);
@@ -11,7 +17,7 @@ N49 之後PTS 冊號未確定
 const body=function(tag,closing){
 	if (!closing) this.start();
 }
-
+git 
 const fileStart=function(fn,i){
 	console.log(fn);
 	noteFileStart();
